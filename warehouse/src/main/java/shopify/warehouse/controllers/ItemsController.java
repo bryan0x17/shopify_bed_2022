@@ -38,7 +38,7 @@ public class ItemsController {
         currentItem.setName(item.getName());
         currentItem.setAmount(item.getAmount());
         currentItem.setDescription(item.getDescription());
-        return itemRepository.save(item);
+        return itemRepository.save(currentItem);
     }
 
     @DeleteMapping("/{id}")
