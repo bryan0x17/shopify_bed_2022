@@ -17,46 +17,46 @@ class ItemsControllerTest {
     @Autowired
     private ItemsController itemsController;
 
-    private final Item item1 = new Item("Table", "Oak dining table", 10);
-    private final Item item2 = new Item("Chair", "Leather reclining chair", 8);
+    private static final Item item1 = new Item("Table", "Oak dining table", 10);
+    private static final Item item2 = new Item("Chair", "Leather reclining chair", 8);
 
 
     @BeforeEach
     void setUp() {
-        itemsController.createItem(this.item1);
-        itemsController.createItem(this.item2);
+        itemsController.createItem(item1);
+        itemsController.createItem(item2);
     }
 
     @Test
     void getItems() {
         List<Item> items = itemsController.getItems();
-        assertEquals(items.get(0).getId(), this.item1.getId());
-        assertEquals(items.get(1).getId(), this.item2.getId());
+        assertTrue(items.contains(item1));
+        assertTrue(items.contains(item2));
     }
 
     @Test
     void getItem() {
-        assertEquals(this.itemsController.getItem(this.item1.getId()).getId(), this.item1.getId());
-        assertEquals(this.itemsController.getItem(this.item2.getId()).getId(), this.item2.getId());
+        assertEquals(this.itemsController.getItem(item1.getId()).getId(), item1.getId());
+        assertEquals(this.itemsController.getItem(item2.getId()).getId(), item2.getId());
     }
 
     @Test
     void createItem() {
-        assertNotNull(this.itemsController.getItem(this.item1.getId()));
-        assertNotNull(this.itemsController.getItem(this.item2.getId()));
+        assertNotNull(this.itemsController.getItem(item1.getId()));
+        assertNotNull(this.itemsController.getItem(item2.getId()));
     }
 
     @Test
     void updateItem() {
-        this.itemsController.updateItem(this.item1.getId(), new Item("Bookcase", this.item1.getDescription(), this.item1.getAmount()));
-        assertEquals("Bookcase", this.itemsController.getItem(this.item1.getId()).getName());
-        this.itemsController.updateItem(this.item2.getId(), new Item("Stool", this.item2.getDescription(), this.item2.getAmount()));
-        assertEquals("Stool", this.itemsController.getItem(this.item2.getId()).getName());
+        this.itemsController.updateItem(item1.getId(), new Item("Bookcase", item1.getDescription(), item1.getAmount()));
+        assertEquals("Bookcase", this.itemsController.getItem(item1.getId()).getName());
+        this.itemsController.updateItem(item2.getId(), new Item("Stool", item2.getDescription(), item2.getAmount()));
+        assertEquals("Stool", this.itemsController.getItem(item2.getId()).getName());
     }
 
     @Test
     void deleteItem() {
-        Item deletedItem = this.itemsController.deleteItem(this.item1.getId(), "Deleted");
+        Item deletedItem = this.itemsController.deleteItem(item1.getId(), "Deleted");
         assertEquals(0, deletedItem.getAmount());
         assertTrue(deletedItem.isDeleted());
         assertEquals("Deleted", deletedItem.getDeletionComments());
@@ -65,8 +65,8 @@ class ItemsControllerTest {
 
     @Test
     void getDeletedItems() {
-        Item deletedItem1 = this.itemsController.deleteItem(this.item1.getId(), "Deleted");
-        Item deletedItem2 = this.itemsController.deleteItem(this.item2.getId(), "Deleted");
+        Item deletedItem1 = this.itemsController.deleteItem(item1.getId(), "Deleted");
+        Item deletedItem2 = this.itemsController.deleteItem(item2.getId(), "Deleted");
         List<Item> deletedItems = this.itemsController.getDeletedItems();
         assertTrue(deletedItem1.getId() == deletedItems.get(0).getId() || deletedItem1.getId() == deletedItems.get(1).getId());
         assertTrue(deletedItem2.getId() == deletedItems.get(0).getId() || deletedItem2.getId() == deletedItems.get(1).getId());
@@ -74,7 +74,7 @@ class ItemsControllerTest {
 
     @Test
     void restoreItem() {
-        Item deletedItem = this.itemsController.deleteItem(this.item1.getId(), "Deleted");
+        Item deletedItem = this.itemsController.deleteItem(item1.getId(), "Deleted");
         Item restoredItem = this.itemsController.restoreItem(deletedItem.getId());
         assertFalse(restoredItem.isDeleted());
         assertNull(restoredItem.getDeletionComments());

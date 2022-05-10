@@ -75,4 +75,12 @@ public class Item {
     public void setDeleted(boolean deleted) {
         this.deleted = deleted;
     }
+
+    @Override
+    public boolean equals(Object other) {
+        if (getClass() != other.getClass()) {
+            return false;
+        }
+        return this.getId() == ((Item) other).getId();
+    }
 }
