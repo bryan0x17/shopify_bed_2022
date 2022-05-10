@@ -15,6 +15,10 @@ public class Item {
     private String description;
     private int amount = 0;
 
+    private String deletionComments = null;
+
+    private boolean deleted = false;
+
     public Item() {
     }
 
@@ -54,5 +58,21 @@ public class Item {
 
     public void setAmount(int amount) {
         this.amount = amount;
+    }
+
+    public String getDeletionComments() {
+        return deletionComments;
+    }
+
+    public void setDeletionComments(String deletionComments) {
+        this.deletionComments = deletionComments;
+    }
+
+    public boolean isDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(boolean deleted) {
+        this.deleted = deleted;
     }
 }

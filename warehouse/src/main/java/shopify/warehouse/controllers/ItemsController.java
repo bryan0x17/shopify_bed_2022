@@ -3,6 +3,7 @@ package shopify.warehouse.controllers;
 import org.springframework.web.bind.annotation.*;
 import shopify.warehouse.models.Item;
 import shopify.warehouse.repositories.ItemRepository;
+import shopify.warehouse.services.DeletionService;
 
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -19,12 +20,17 @@ public class ItemsController {
 
     @GetMapping
     public List<Item> getItems() {
-        return itemRepository.findAll();
+        return itemRepository.findByDeletedFalse();
     }
 
     @GetMapping("/{id}")
     public Item getItem(@PathVariable Long id) throws NoSuchElementException {
-        return itemRepository.findById(id).orElseThrow();
+        return itemRepository.findByIdAndDeletedFalse(id).orElseThrow();
+    }
+
+    @GetMapping("/deleted")
+    public List<Item> getDeletedItems() {
+        return this.itemRepository.findByDeletedTrue();
     }
 
     @PostMapping
@@ -41,9 +47,15 @@ public class ItemsController {
         return itemRepository.save(currentItem);
     }
 
+    @PutMapping("/deleted/{id}")
+    public Item restoreItem(@PathVariable Long id) throws NoSuchElementException {
+        DeletionService deletionService = new DeletionService(this.itemRepository);
+        return deletionService.undoDelete(id);
+    }
+
     @DeleteMapping("/{id}")
-    public boolean deleteItem(@PathVariable Long id) {
-        itemRepository.deleteById(id);
-        return !itemRepository.findById(id).isPresent();
+    public Item deleteItem(@PathVariable Long id, @RequestParam String deletionComments) {
+        DeletionService deletionService = new DeletionService(this.itemRepository);
+        return deletionService.deleteItem(id, deletionComments);
     }
 }
