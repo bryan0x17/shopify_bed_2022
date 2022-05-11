@@ -9,7 +9,8 @@
 </head>
 
 <body>
-    
+    <h2>Inventory</h2>
+    <a href="/inventory/new">Add New</a>
         <table th:if="${itemList != null AND !itemList.isEmpty()}">
             <thead>
                 <tr>
@@ -21,7 +22,13 @@
             </thead>
             <tbody>
                 <tr th:each="item : ${itemList}">
-                    <td th:text></td>
+                    <td th:text="${item.name}"></td>
+                    <td th:text="${item.description}"></td>
+                    <td th:text="${item.amount}"></td>
+                    <td>
+                        <button><a href="/new/${item.id}"></a>Edit</button>
+                        <button onclick="sendDelete('${item.id}')">Delete</button>
+                    </td>
                 </tr>
             </tbody>
         </table>
