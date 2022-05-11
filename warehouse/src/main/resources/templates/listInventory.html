@@ -11,6 +11,7 @@
 <body>
     <h2>Inventory</h2>
     <a href="/inventory/new">Add New</a>
+    <a href="/inventory/generate">Generate Examples</a>
         <table th:if="${itemList != null AND !itemList.isEmpty()}">
             <thead>
                 <tr>
@@ -26,7 +27,7 @@
                     <td th:text="${item.description}"></td>
                     <td th:text="${item.amount}"></td>
                     <td>
-                        <button><a href="/new/${item.id}"></a>Edit</button>
+                        <a th:href="@{|/inventory/edit/${item.id}|}">Edit</a>
                         <button onclick="sendDelete('${item.id}')">Delete</button>
                     </td>
                 </tr>
