@@ -1,5 +1,7 @@
 package shopify.warehouse.controllers;
 
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import shopify.warehouse.models.Item;
 import shopify.warehouse.repositories.ItemRepository;
@@ -8,7 +10,7 @@ import shopify.warehouse.services.DeletionService;
 import java.util.List;
 import java.util.NoSuchElementException;
 
-@RestController
+@Controller
 @RequestMapping("/inventory")
 public class ItemsController {
 
@@ -19,11 +21,12 @@ public class ItemsController {
     }
 
     @GetMapping
-    public List<Item> getItems() {
-        return itemRepository.findByDeletedFalse();
+    public String getItems(Model model) {
+        model.addAttribute(itemRepository.findByDeletedFalse());
+        return "listInventory";
     }
 
-    @GetMapping("inventory/{id}")
+    @GetMapping("/{id}")
     public Item getItem(@PathVariable Long id) throws NoSuchElementException {
         return itemRepository.findByIdAndDeletedFalse(id).orElseThrow();
     }
@@ -38,7 +41,7 @@ public class ItemsController {
         return itemRepository.save(item);
     }
 
-    @PutMapping("inventory/{id}")
+    @PutMapping("/{id}")
     public Item updateItem(@PathVariable Long id, @RequestBody Item item) throws NoSuchElementException {
         Item currentItem = itemRepository.findById(id).orElseThrow();
         currentItem.setName(item.getName());
@@ -53,7 +56,7 @@ public class ItemsController {
         return deletionService.undoDelete(id);
     }
 
-    @DeleteMapping("inventory/{id}")
+    @DeleteMapping("/{id}")
     public Item deleteItem(@PathVariable Long id, @RequestParam String deletionComments) {
         DeletionService deletionService = new DeletionService(this.itemRepository);
         return deletionService.deleteItem(id, deletionComments);
