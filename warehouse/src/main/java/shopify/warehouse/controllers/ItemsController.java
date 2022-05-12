@@ -1,6 +1,5 @@
 package shopify.warehouse.controllers;
 
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -27,12 +26,7 @@ public class ItemsController {
         return "listInventory";
     }
 
-    @GetMapping("/new")
-    public String getNewItemPage(Model model) {
-        return "addNewItem";
-    }
-
-    @GetMapping("/edit/{id}")
+    @GetMapping("/{id}")
     public Item getItem(@PathVariable Long id) throws NoSuchElementException {
         return itemRepository.findByIdAndDeletedFalse(id).orElseThrow();
     }
@@ -42,10 +36,9 @@ public class ItemsController {
         return this.itemRepository.findByDeletedTrue();
     }
 
-    @PostMapping(value = "/new")
-    public String createItem(Item item) {
-        itemRepository.save(item);
-        return "redirect:/inventory";
+    @PostMapping
+    public Item createItem(@RequestBody Item item) {
+        return itemRepository.save(item);
     }
 
     @PutMapping("/{id}")
