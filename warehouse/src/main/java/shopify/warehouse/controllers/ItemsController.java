@@ -23,8 +23,8 @@ public class ItemsController {
         return itemRepository.findByDeletedFalse();
     }
 
-    @GetMapping("inventory/{id}")
-    public Item getItem(@PathVariable Long id) throws NoSuchElementException {
+    @GetMapping("/{id}")
+    public Item getItem(@PathVariable Long id) {
         return itemRepository.findByIdAndDeletedFalse(id).orElseThrow();
     }
 
@@ -38,7 +38,7 @@ public class ItemsController {
         return itemRepository.save(item);
     }
 
-    @PutMapping("inventory/{id}")
+    @PutMapping("/{id}")
     public Item updateItem(@PathVariable Long id, @RequestBody Item item) throws NoSuchElementException {
         Item currentItem = itemRepository.findById(id).orElseThrow();
         currentItem.setName(item.getName());
@@ -53,7 +53,7 @@ public class ItemsController {
         return deletionService.undoDelete(id);
     }
 
-    @DeleteMapping("inventory/{id}")
+    @DeleteMapping("/{id}")
     public Item deleteItem(@PathVariable Long id, @RequestParam String deletionComments) {
         DeletionService deletionService = new DeletionService(this.itemRepository);
         return deletionService.deleteItem(id, deletionComments);
