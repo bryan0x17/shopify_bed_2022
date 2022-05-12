@@ -29,7 +29,6 @@ function renderInventoryTable(data) {
 async function editItem(id) {
   const row = document.getElementById(id);
   const item = await getInventoryItem(id);
-  console.log(item);
   if (item) {
     row.innerHTML = `
         <td>
@@ -39,18 +38,34 @@ async function editItem(id) {
         <td>
             <input type="number" name="amount" id="amount" value="${item.amount}"></td>
         <td>
-            <button onclick="saveItem(${item.id}">Save</button>
+            <button onclick="saveItem(${item.id})">Save</button>
         </td>
         `;
   } else {
-      window.alert("Item can't be edited");
+    window.alert("Item can't be edited");
   }
-  
+}
+
+async function saveItem(id) {
+  const name = document.getElementById("name").value;
+  const description = document.getElementById("description").value;
+  const amount = document.getElementById("amount").value;
+  const requestOptions = {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ name, description, amount }),
+  };
+  const response = await fetch("/inventory/" + id, requestOptions);
+  if (response.ok) {
+    window.alert("Item updated successfully");
+    await getInventory();
+  } else {
+    window.alert("Item could not be updated");
+  }
 }
 
 async function getInventoryItem(id) {
-    return fetch('/inventory/' + id)
-        .then(response => response.json());
+  return fetch("/inventory/" + id).then((response) => response.json());
 }
 
 getInventory();

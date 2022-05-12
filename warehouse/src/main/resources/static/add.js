@@ -10,7 +10,6 @@ async function addNewItem() {
     const response = await fetch('/inventory', requestOptions);
     if (response.ok) {
         window.alert("Item added successfully");
-        return false;
     } else {
         window.alert("Item could not be added");
     }
