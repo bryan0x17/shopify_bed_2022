@@ -12,16 +12,17 @@ function renderInventoryTable(data) {
     );
   } else {
     data.forEach((item) => {
-      tableElement.innerHTML = `
-        <tr id="${item.id}">
-            <td>${item.name}</td>
-            <td>${item.description}</td>
-            <td>${item.amount}</td>
-            <td>
-                <button onclick="editItem(${item.id})">Edit</button>
-                <button onclick="deleteItem(${item.id})">Delete</button>
-            </td>
-        </tr>`;
+      const row = document.createElement("tr");
+      tableElement.appendChild(row);
+      row.id = item.id;
+      row.innerHTML = `
+        <td>${item.name}</td>
+        <td>${item.description}</td>
+        <td>${item.amount}</td>
+        <td>
+            <button onclick="editItem(${item.id})">Edit</button>
+            <button onclick="deleteItem(${item.id})">Delete</button>
+        </td>`;
     });
   }
 }
@@ -66,6 +67,36 @@ async function saveItem(id) {
 
 async function getInventoryItem(id) {
   return fetch("/inventory/" + id).then((response) => response.json());
+}
+
+async function generateExamples() {
+  const names = [
+    "Table",
+    "Chair",
+    "TV",
+    "Couch",
+    "Fridge",
+    "Bed",
+    "Desk",
+    "Cupboard",
+    "Dishwasher",
+    "Home theatre",
+  ];
+  const descriptions = ["Oak", "Outdoor", "Premium", "Sale", "Made in Canada"];
+
+  for (let i = 0; i < 20; i++) {
+    const name = names[Math.floor(Math.random() * names.length)];
+    const description =
+      descriptions[Math.floor(Math.random() * descriptions.length)];
+    const amount = Math.round(Math.random() * 100);
+    const requestOptions = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ name, description, amount }),
+    };
+    await fetch("/inventory", requestOptions);
+  }
+  getInventory();
 }
 
 getInventory();
