@@ -24,7 +24,8 @@ class DeletionServiceTest {
 
     @Test
     void deleteItem() {
-        Item deletedItem = this.itemsController.deleteItem(item1.getId(), "Deleted");
+        Item item = new Item("Deleted");
+        Item deletedItem = this.itemsController.deleteItem(item1.getId(), item);
         assertTrue(deletedItem.isDeleted());
         assertEquals("Deleted", deletedItem.getDeletionComments());
         assertEquals(0, deletedItem.getAmount());
@@ -32,7 +33,8 @@ class DeletionServiceTest {
 
     @Test
     void undoDelete() {
-        Item deletedItem = this.itemsController.deleteItem(item2.getId(), "Deleted");
+        Item item = new Item("Deleted");
+        Item deletedItem = this.itemsController.deleteItem(item2.getId(), item);
         assertTrue(deletedItem.isDeleted());
         assertEquals("Deleted", deletedItem.getDeletionComments());
         assertEquals(0, deletedItem.getAmount());

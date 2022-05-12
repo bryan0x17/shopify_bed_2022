@@ -28,6 +28,10 @@ public class Item {
         this.amount = amount;
     }
 
+    public Item(String deletionComments) {
+        this.deletionComments = deletionComments;
+    }
+
     public long getId() {
         return id;
     }
