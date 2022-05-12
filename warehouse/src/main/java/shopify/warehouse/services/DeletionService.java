@@ -1,12 +1,10 @@
 package shopify.warehouse.services;
 
-import org.springframework.stereotype.Service;
 import shopify.warehouse.models.Item;
 import shopify.warehouse.repositories.ItemRepository;
 
 import java.util.NoSuchElementException;
 
-@Service
 public class DeletionService {
 
     private final ItemRepository itemRepository;

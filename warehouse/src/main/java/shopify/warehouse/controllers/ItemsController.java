@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.*;
 import shopify.warehouse.models.Item;
 import shopify.warehouse.repositories.ItemRepository;
 import shopify.warehouse.services.DeletionService;
-import shopify.warehouse.services.ExampleDataService;
 
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -34,21 +33,13 @@ public class ItemsController {
     }
 
     @GetMapping("/edit/{id}")
-    public String getItem(@PathVariable Long id, Model model) throws NoSuchElementException {
-        model.addAttribute(itemRepository.findByIdAndDeletedFalse(id).orElseThrow());
-        return "editItem";
+    public Item getItem(@PathVariable Long id) throws NoSuchElementException {
+        return itemRepository.findByIdAndDeletedFalse(id).orElseThrow();
     }
 
     @GetMapping("/deleted")
     public List<Item> getDeletedItems() {
         return this.itemRepository.findByDeletedTrue();
-    }
-
-    @GetMapping("/generate")
-    public String generateExampleData() {
-        ExampleDataService exs = new ExampleDataService(itemRepository);
-        exs.generateData();
-        return "redirect:/inventory";
     }
 
     @PostMapping(value = "/new")
@@ -57,7 +48,7 @@ public class ItemsController {
         return "redirect:/inventory";
     }
 
-    @PutMapping("edit/{id}")
+    @PutMapping("/{id}")
     public Item updateItem(@PathVariable Long id, @RequestBody Item item) throws NoSuchElementException {
         Item currentItem = itemRepository.findById(id).orElseThrow();
         currentItem.setName(item.getName());
