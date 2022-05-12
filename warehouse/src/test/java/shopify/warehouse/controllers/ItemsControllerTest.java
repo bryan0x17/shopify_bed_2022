@@ -56,7 +56,7 @@ class ItemsControllerTest {
 
     @Test
     void deleteItem() {
-        Item deletedItem = this.itemsController.deleteItem(item1.getId(), "Deleted");
+        Item deletedItem = this.itemsController.deleteItem(item1.getId(), new Item("Deleted"));
         assertEquals(0, deletedItem.getAmount());
         assertTrue(deletedItem.isDeleted());
         assertEquals("Deleted", deletedItem.getDeletionComments());
@@ -65,8 +65,8 @@ class ItemsControllerTest {
 
     @Test
     void getDeletedItems() {
-        Item deletedItem1 = this.itemsController.deleteItem(item1.getId(), "Deleted");
-        Item deletedItem2 = this.itemsController.deleteItem(item2.getId(), "Deleted");
+        Item deletedItem1 = this.itemsController.deleteItem(item1.getId(), new Item("Deleted"));
+        Item deletedItem2 = this.itemsController.deleteItem(item2.getId(), new Item("Deleted"));
         List<Item> deletedItems = this.itemsController.getDeletedItems();
         assertTrue(deletedItem1.getId() == deletedItems.get(0).getId() || deletedItem1.getId() == deletedItems.get(1).getId());
         assertTrue(deletedItem2.getId() == deletedItems.get(0).getId() || deletedItem2.getId() == deletedItems.get(1).getId());
@@ -74,7 +74,7 @@ class ItemsControllerTest {
 
     @Test
     void restoreItem() {
-        Item deletedItem = this.itemsController.deleteItem(item1.getId(), "Deleted");
+        Item deletedItem = this.itemsController.deleteItem(item1.getId(), new Item("Deleted"));
         Item restoredItem = this.itemsController.restoreItem(deletedItem.getId());
         assertFalse(restoredItem.isDeleted());
         assertNull(restoredItem.getDeletionComments());

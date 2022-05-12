@@ -54,8 +54,8 @@ public class ItemsController {
     }
 
     @DeleteMapping("/{id}")
-    public Item deleteItem(@PathVariable Long id, @RequestParam String deletionComments) {
+    public Item deleteItem(@PathVariable Long id, @RequestBody Item item) {
         DeletionService deletionService = new DeletionService(this.itemRepository);
-        return deletionService.deleteItem(id, deletionComments);
+        return deletionService.deleteItem(id, item.getDeletionComments());
     }
 }

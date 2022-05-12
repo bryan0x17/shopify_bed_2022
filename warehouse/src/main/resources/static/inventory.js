@@ -6,6 +6,7 @@ async function getInventory() {
 
 function renderInventoryTable(data) {
   const tableElement = document.getElementById("table");
+  tableElement.innerHTML = '';
   if (!data.length || !Array.isArray(data)) {
     tableElement.append(
       (document.createElement("p").innerText = "No items to display")
@@ -92,9 +93,39 @@ async function generateExamples() {
     const requestOptions = {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ name, description, amount }),
+      body: JSON.stringify({ name, description, amount })
     };
     await fetch("/inventory", requestOptions);
+  }
+  getInventory();
+}
+
+async function deleteItem(id) {
+  const row = document.getElementById(id);
+  const item = await getInventoryItem(id);
+  row.innerHTML = `
+        <td>${item.name}</td>
+        <td>${item.description}</td>
+        <td>${item.amount}</td>
+        <td>
+            <label for="comments">Comments</label>
+            <input type="text" name="comments" id="comments">
+            <button onclick="sendDelete(${id})">Delete</button>
+        </td>`;
+}
+
+async function sendDelete(id) {
+  const comments = document.getElementById("comments").value;
+  const response = await fetch("/inventory/" + id, {
+    method: "DELETE",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ deletionComments: comments })
+  });
+  if (response.ok) {
+    window.alert("Item deleted successfully");
+    await getInventory();
+  } else {
+    window.alert("Item could not be deleted");
   }
   getInventory();
 }
