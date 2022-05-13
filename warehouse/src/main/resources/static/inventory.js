@@ -28,6 +28,7 @@ function renderInventoryTable(data) {
   }
 }
 
+//Renders the row as inputs
 async function editItem(id) {
   const row = document.getElementById(id);
   const item = await getInventoryItem(id);
@@ -48,6 +49,7 @@ async function editItem(id) {
   }
 }
 
+//Grabs the inputs and sends the PUT request to update
 async function saveItem(id) {
   const name = document.getElementById("name").value;
   const description = document.getElementById("description").value;
@@ -70,6 +72,7 @@ async function getInventoryItem(id) {
   return fetch("/inventory/" + id).then((response) => response.json());
 }
 
+//Generates 20 random example items to work with
 async function generateExamples() {
   const names = [
     "Table",
@@ -100,6 +103,7 @@ async function generateExamples() {
   getInventory();
 }
 
+//Renders the input for deletion comments
 async function deleteItem(id) {
   const row = document.getElementById(id);
   const item = await getInventoryItem(id);
@@ -114,6 +118,7 @@ async function deleteItem(id) {
         </td>`;
 }
 
+//Grabs the deletion comments and sends the DELETE request
 async function sendDelete(id) {
   const comments = document.getElementById("comments").value;
   const response = await fetch("/inventory/" + id, {

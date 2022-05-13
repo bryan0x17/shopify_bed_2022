@@ -2,6 +2,9 @@ package shopify.warehouse.models;
 
 import javax.persistence.*;
 
+/**
+ * Model/Entity class representing an inventory item
+ */
 @Entity
 @Table(name = "items")
 public class Item {
