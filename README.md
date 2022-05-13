@@ -30,4 +30,4 @@ The app uses Maven and can be run from the command line or from your chosen IDE.
 
 **Note**: Replit can be quite slow, so please be patient while the app builds and runs. Clicking "Generate Examples" is especially slow.
 
-[![Run on Repl.it](https://repl.it/badge/github/bryan0x17/shopify_bed_2022)](https://repl.it/github/bryan0x17/shopify_bed_2022)
+[![Run on Repl.it](https://repl.it/badge/github/bryan0x17/shopify_bed_2022)](https://replit.com/@bryan0x17/shopifybed2022)
