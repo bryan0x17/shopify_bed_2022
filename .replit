@@ -1,0 +1,2 @@
+language = "java10"
+run = "java -jar /home/runner/shopifybed2022/warehouse/target/warehouse-0.0.1-SNAPSHOT.jar"
