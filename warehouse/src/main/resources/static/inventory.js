@@ -74,6 +74,8 @@ async function getInventoryItem(id) {
 
 //Generates 20 random example items to work with
 async function generateExamples() {
+  const tableElement = document.getElementById("table");
+  tableElement.innerHTML = '<p>Generating examples...</p>';
   const names = [
     "Table",
     "Chair",
