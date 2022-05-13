@@ -6,27 +6,32 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="inventory.js" defer></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
     <title>Inventory</title>
 </head>
 
 <body>
-    <h2>Inventory</h2>
-    <a href="/add.html">Add New</a>
-    <button id="examples" onclick="generateExamples()">Generate Examples</button>
-    <a href="/deleted.html">Deleted Items</a>
-    <table>
-        <thead>
-            <tr>
-                <th>Name</th>
-                <th>Description</th>
-                <th>Amount</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody id="table">
+    <div class="container">
+        <h2 class="text-center">Inventory</h2>
+        <a class="btn btn-dark" href="/add.html">Add New</a>
+        <button class="btn btn-dark" id="examples" onclick="generateExamples()">Generate Examples</button>
+        <a class="btn btn-dark" href="/deleted.html">Deleted Items</a>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>Amount</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody id="table">
 
-        </tbody>
-    </table>
+            </tbody>
+        </table>
+    </div>
+
 </body>
 
 </html>

@@ -20,7 +20,7 @@ function renderInventoryTable(data) {
           <td>${item.description}</td>
           <td>${item.deletionComments}</td>
           <td>
-              <button onclick="restoreItem(${item.id})">Restore</button>
+              <button class="btn btn-primary" onclick="restoreItem(${item.id})">Restore</button>
           </td>`;
     });
   }

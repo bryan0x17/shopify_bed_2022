@@ -21,8 +21,8 @@ function renderInventoryTable(data) {
         <td>${item.description}</td>
         <td>${item.amount}</td>
         <td>
-            <button onclick="editItem(${item.id})">Edit</button>
-            <button onclick="deleteItem(${item.id})">Delete</button>
+            <button class="btn btn-success" onclick="editItem(${item.id})">Edit</button>
+            <button class="btn btn-danger" onclick="deleteItem(${item.id})">Delete</button>
         </td>`;
     });
   }
@@ -41,7 +41,7 @@ async function editItem(id) {
         <td>
             <input type="number" name="amount" id="amount" value="${item.amount}"></td>
         <td>
-            <button onclick="saveItem(${item.id})">Save</button>
+            <button class="btn btn-success" onclick="saveItem(${item.id})">Save</button>
         </td>
         `;
   } else {
@@ -116,7 +116,7 @@ async function deleteItem(id) {
         <td>
             <label for="comments">Comments</label>
             <input type="text" name="comments" id="comments">
-            <button onclick="sendDelete(${id})">Delete</button>
+            <button class="btn btn-danger" onclick="sendDelete(${id})">Delete</button>
         </td>`;
 }
 
